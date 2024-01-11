@@ -29,7 +29,8 @@ el.addEventListener(
         mouseOffsetY * newScaledHeight - (y - rect.top) + currentScrollTop;
 
       el.style.scale = scale;
-      el.style.transformOrigin = "0 0";
+      el.style.transformOrigin = "top left 0px";
+      el.style.scrollBehavior = "auto";
 
       el.scrollLeft = newScrollLeft;
       el.scrollTop = newScrollTop;
@@ -37,6 +38,7 @@ el.addEventListener(
     if (scale === 1) {
       el.style.scale = "initial";
       el.style.transformOrigin = "initial";
+      el.style.scrollBehavior = "initial";
     }
   },
   { passive: false },
