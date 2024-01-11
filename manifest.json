@@ -3,11 +3,11 @@
   "name": "Pinch Zoom",
   "description": "Pinch Zoom for chrome",
   "version": "1.0",
-	"content_scripts": [
-		{
-			"js": ["index.js"],
-			"matches": ["<all_urls>"],
-			"run_at": "document_start"
-		}
-	]
+  "content_scripts": [
+    {
+      "js": ["index.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_start"
+    }
+  ]
 }
