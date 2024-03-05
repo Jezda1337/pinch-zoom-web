@@ -74,5 +74,4 @@ window.addEventListener("load", function () {
   }
 
   window.addEventListener("wheel", zoom, { passive: false });
-  window.addEventListener("hashchange", zoom, { passive: false });
 });
