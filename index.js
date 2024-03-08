@@ -25,8 +25,8 @@ window.addEventListener("load", function () {
       e.stopPropagation();
       e.preventDefault();
 
-      scale += deltaY * -0.004;
-      scale = Math.min(Math.max(1, scale), 4);
+      scale += deltaY * -0.002;
+      scale = Math.min(Math.max(1, scale), 6);
 
       const rect = el.getBoundingClientRect();
       const currentScrollLeft = el.scrollLeft;
