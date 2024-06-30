@@ -1,77 +1,93 @@
 window.addEventListener("load", function () {
-  let scale = 1;
-  let newScrollLeft, newScrollTop;
-  const el = document.documentElement;
-
-  const styling = {
-    scale: "initial",
-    transition: "initial",
-    transformOrigin: "0 0 0",
-    scrollBehavior: "unset",
-    backfaceVisibility: "hidden",
-  };
-
-  el.style.scale = styling.scale;
-  el.style.transition = styling.transition;
-  el.style.transformOrigin = styling.transformOrigin;
-  el.style.scrollBehavior = styling.scrollBehavior;
-  el.style.backfaceVisibility = styling.backfaceVisibility;
-
-  function zoom(e) {
-    const { x, y, deltaY, shiftKey } = e;
-
-    if (shiftKey && scale >= 1) {
-      const allElements = document.querySelectorAll("*");
-      e.stopPropagation();
-      e.preventDefault();
-
-      scale += deltaY * -0.002;
-      scale = Math.min(Math.max(1, scale), 6);
-
-      const rect = el.getBoundingClientRect();
-      const currentScrollLeft = el.scrollLeft;
-      const currentScrollTop = el.scrollTop;
-
-      const newScaledWidth = el.offsetWidth * scale;
-      const newScaledHeight = el.offsetHeight * scale;
-
-      const mouseOffsetX = (x - rect.left) / rect.width;
-      const mouseOffsetY = (y - rect.top) / rect.height;
-
-      newScrollLeft =
-        mouseOffsetX * newScaledWidth - (x - rect.left) + currentScrollLeft;
-      newScrollTop =
-        mouseOffsetY * newScaledHeight - (y - rect.top) + currentScrollTop;
-
-      el.style.scale = scale;
-      el.style.transformOrigin = "top left 0px";
-      el.style.scrollBehavior = "unset";
-      el.style.backfaceVisibility = "hidden";
-
-      el.scrollLeft = newScrollLeft;
-      el.scrollTop = newScrollTop;
-
-      // elements with sticky position act strange when scale is applyed so this is some workaroud to prevent breaking the layout
-      allElements.forEach((element) => {
-        const computedStyle = window.getComputedStyle(element);
-        if (computedStyle.position === "sticky") {
-          if (scale > 1) element.style.top = "unset";
-          else element.style.removeProperty("top");
-        }
-        if (computedStyle.position === "fixed") {
-          if (scale > 1)
-            element.parentElement.style.transform = "translateZ(0)";
-          else element.parentElement.style.removeProperty("transform");
-        }
-      });
+  class ZoomHandler {
+    constructor(elementSelector = "html") {
+      this.element = null
+      this.scale = 1
+      this.selectElement(elementSelector)
+      this.addListeners()
     }
 
-    if (scale === 1) {
-      el.style.scale = "initial";
-      el.style.transformOrigin = "initial";
-      el.style.scrollBehavior = "initial";
+    selectElement(elementSelector) {
+      const queried = document.querySelector(elementSelector)
+      if (queried === null) throw new Error("Zoom element not found")
+      this.element = queried
+
+      this.styling = {
+        scale: "initial",
+        transition: "initial",
+        transformOrigin: "0 0 0",
+        scrollBehavior: "unset",
+        backfaceVisibility: "hidden",
+      }
+
+      this.applyInitialStyles()
+    }
+
+    applyInitialStyles() {
+      Object.keys(this.styling).forEach((key) => {
+        this.element.style[key] = this.styling[key]
+      })
+    }
+
+    zoom(e) {
+      const { x, y, deltaY, shiftKey } = e
+
+      if (shiftKey && this.scale >= 1) {
+        const allElements = document.querySelectorAll("*")
+        e.stopPropagation()
+        e.preventDefault()
+
+        this.scale += deltaY * -0.002
+        this.scale = Math.min(Math.max(1, this.scale), 6)
+
+        const rect = this.element.getBoundingClientRect()
+        const currentScrollLeft = this.element.scrollLeft
+        const currentScrollTop = this.element.scrollTop
+
+        const newScaledWidth = this.element.offsetWidth * this.scale
+        const newScaledHeight = this.element.offsetHeight * this.scale
+
+        const mouseOffsetX = (x - rect.left) / rect.width
+        const mouseOffsetY = (y - rect.top) / rect.height
+
+        const newScrollLeft =
+          mouseOffsetX * newScaledWidth - (x - rect.left) + currentScrollLeft
+        const newScrollTop =
+          mouseOffsetY * newScaledHeight - (y - rect.top) + currentScrollTop
+
+        this.element.style.scale = this.scale
+        this.element.style.transformOrigin = "top left 0px"
+        this.element.style.scrollBehavior = "unset"
+        this.element.style.backfaceVisibility = "hidden"
+
+        this.element.scrollLeft = newScrollLeft
+        this.element.scrollTop = newScrollTop
+
+        allElements.forEach((element) => {
+          const computedStyle = window.getComputedStyle(element)
+          if (computedStyle.position === "sticky") {
+            if (this.scale > 1) element.style.top = "unset"
+            else element.style.removeProperty("top")
+          }
+          if (computedStyle.position === "fixed") {
+            if (this.scale > 1)
+              element.parentElement.style.transform = "translateZ(0)"
+            else element.parentElement.style.removeProperty("transform")
+          }
+        })
+      }
+
+      if (this.scale === 1) {
+        this.applyInitialStyles()
+      }
+    }
+
+    addListeners() {
+      this.element.addEventListener("wheel", this.zoom.bind(this), {
+        passive: false,
+      })
     }
   }
 
-  window.addEventListener("wheel", zoom, { passive: false });
-});
+  new ZoomHandler()
+})
