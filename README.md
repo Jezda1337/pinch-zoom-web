@@ -1,1 +1,1 @@
-[Screencast from 2024-01-24 13-48-51.webm](https://github.com/Jezda1337/pinch-zoom-web/assets/42359294/67dc084a-bf49-4dba-b60b-405f3207c62c)
+https://github.com/user-attachments/assets/a8f14b41-f02e-4a43-a5f5-7cbf4253a223
