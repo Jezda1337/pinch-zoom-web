@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/268b566d-b8fc-4e06-bef2-e8a6415e4509
 
 ## Installation
 
-1. Download the latest release from the [Releases](https://github.com/yourusername/zoomer/releases) page.
+1. Download the latest release from the [Releases](https://github.com/Jezda1337/zoomer/releases) page.
 2. Go to `chrome://extensions/` in your Chrome browser.
 3. Enable **Developer mode** (toggle in the top right corner).
 4. Click **Load unpacked** and select the extension folder you downloaded.
