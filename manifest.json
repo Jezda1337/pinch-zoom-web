@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Pinch Zoom",
-  "description": "Pinch Zoom for chrome",
-  "version": "1.0",
+  "name": "Zooomer",
+  "description": "Pinch Zoom for chromium",
+  "version": "1.0.0",
   "content_scripts": [
     {
       "js": ["index.js"],
