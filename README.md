@@ -1,6 +1,6 @@
 # Zoomer - Chrome Extension
 
-https://github.com/user-attachments/assets/a8f14b41-f02e-4a43-a5f5-7cbf4253a223
+https://github.com/user-attachments/assets/268b566d-b8fc-4e06-bef2-e8a6415e4509
 
 **Zoomer** is a fun and lightweight Chrome extension that allows you to zoom in and out of any webpage effortlessly. Hold the **Shift** key and use your mouse wheel to zoom in on your content, centering around your mouse pointer.
 
